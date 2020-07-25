@@ -3,23 +3,38 @@ import tensorflow as tf
 from tensorflow import keras
 import pandas as pd
 import numpy as np
+import seaborn as sns
 import matplotlib.pyplot as plt
-import os
-
-defaults = [tf.int64] + [tf.int32] * 12 + [tf.float32] + [tf.int32] * 5 + [tf.float32] * 2 +[tf.int32] * 11 + [tf.float32]+ [tf.int32] * 5 + [tf.float32] *2
+import os, sys, random, pickle
 
 fig, ax = plt.subplots()
 
-data = pd.read_csv("dataset.csv")
-msk = np.random.rand(len(data)) < 0.8
-x_train = data[msk]
-x_test = data[~msk]
-# y_train = x_train.pop('blueWins')
+x_train = pickle.load(open("x_train.pickle","rb"))
+y_train = pickle.load(open("y_train.pickle","rb"))
+x_test = pickle.load(open("x_test.pickle","rb"))
+y_test = pickle.load(open("y_test.pickle","rb"))
 
 print(len(x_train))
+print(len(y_train))
 print(len(x_test))
-x_train.blueKills.hist(bins=20)
-ax.set_xlabel('Blue Kills')
-ax.set_ylabel('Occurrences')
+print(len(y_test))
 
-plt.show()
+# sns.pairplot(x_train[["blueKills", "redKills", "blueTowersDestroyed", "redTowersDestroyed"]], diag_kind="kde")
+# plt.show()
+
+def build_model():
+    model = keras.Sequential([
+        tf.keras.layers.Dense(64, activation = "relu", input_shape=[len(x_train.keys())]),
+        tf.keras.layers.Dense(64, activation = "relu"),
+        tf.keras.layers.Dense(1)
+    ])
+
+    optimizer = tf.keras.optimizers.RMSprop(0.001)
+
+    model.compile(loss = 'mse', optimizer=optimizer,metrics = "accuracy")
+
+    return model
+
+model = build_model()
+
+model.summary()

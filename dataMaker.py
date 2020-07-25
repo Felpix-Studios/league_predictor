@@ -1,6 +1,7 @@
 # imports!
 import pandas as pd
 import numpy as np
+import seaborn as sns
 import matplotlib.pyplot as plt
 import os, sys, random, pickle
 
@@ -12,20 +13,31 @@ msk = np.random.rand(len(data)) < 0.8
 x_train = data[msk]
 x_test = data[~msk]
 
+sns.pairplot(x_train[["blueWins","blueKills", "redKills", "blueTowersDestroyed", "redTowersDestroyed"]], diag_kind="kde")
+
+train_stats = x_train.describe()
+train_stats.pop("blueWins")
+train_stats=train_stats.transpose()
+
+
+
 y_train = x_train.pop('blueWins')
 y_test = x_test.pop('blueWins')
 
-x_train.head()
-y_train.head()
-x_test.head()
-y_test.head()
 print(len(x_train))
 print(len(y_train))
 print(len(x_test))
 print(len(y_test))
 
+# Normalizing data
+def norm(x):
+    return(x-train_stats['mean']/train_stats['std'])
+
+norm_x_train = norm(x_train)
+norm_x_test = norm(x_test)
+
 pickle_out = open("x_train.pickle","wb")
-pickle.dump(x_train,pickle_out)
+pickle.dump(norm_x_train,pickle_out)
 pickle_out.close()
 
 pickle_out = open("y_train.pickle","wb")
@@ -33,9 +45,11 @@ pickle.dump(y_train,pickle_out)
 pickle_out.close()
 
 pickle_out = open("x_test.pickle","wb")
-pickle.dump(x_test,pickle_out)
+pickle.dump(norm_x_test,pickle_out)
 pickle_out.close()
 
 pickle_out = open("y_test.pickle","wb")
 pickle.dump(y_test,pickle_out)
 pickle_out.close()
+
+plt.show()
