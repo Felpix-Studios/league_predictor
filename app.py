@@ -7,18 +7,19 @@ import matplotlib.pyplot as plt
 import os
 
 defaults = [tf.int64] + [tf.int32] * 12 + [tf.float32] + [tf.int32] * 5 + [tf.float32] * 2 +[tf.int32] * 11 + [tf.float32]+ [tf.int32] * 5 + [tf.float32] *2
-dataset = tf.data.experimental.CsvDataset("dataset.csv",defaults)
 
-datan=np.genfromtxt('dataset.csv',delimiter=',')
+fig, ax = plt.subplots()
 
-col_names = ['blueWardsPlaced','blueWardsDestroyed','blueFirstBlood','blueKills','blueDeaths','blueAssists','blueEliteMonsters','blueDragons','blueHeralds','blueTowersDestroyed','blueTotalGold','blueAvgLevel','blueTotalExperience','blueTotalMinionsKilled','blueTotalJungleMinionsKilled','blueGoldDiff','blueExperienceDiff','blueCSPerMin','blueGoldPerMin','redWardsPlaced','redWardsDestroyed','redFirstBlood','redKills','redDeaths','redAssists','redEliteMonsters','redDragons','redHeralds','redTowersDestroyed','redTotalGold','redAvgLevel','redTotalExperience','redTotalMinionsKilled','redTotalJungleMinionsKilled','redGoldDiff','redExperienceDiff','redCSPerMin','redGoldPerMin']
-def _parse_csv_row(*vals):
-    winner=tf.convert_to_tensor(vals[1])
-    feat_vals=tf.convert_to_tensor(vals[2:])
+data = pd.read_csv("dataset.csv")
+msk = np.random.rand(len(data)) < 0.8
+x_train = data[msk]
+x_test = data[~msk]
+# y_train = x_train.pop('blueWins')
 
-    features=dict(zip(col_names,feat_vals))
-    return features
+print(len(x_train))
+print(len(x_test))
+x_train.blueKills.hist(bins=20)
+ax.set_xlabel('Blue Kills')
+ax.set_ylabel('Occurrences')
 
-dataset = dataset.map(_parse_csv_row).batch(64)
-
-print(list(dataset.take(1)))
+plt.show()
