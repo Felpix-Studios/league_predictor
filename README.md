@@ -11,7 +11,7 @@ After that, go ahead and run the dataMaker.py file to create and filter training
 Following, use simply run app.py...
 
 ## ToDo
-[x] Process the data
-[ ] Create and test a model
-[ ] Run predictions
-[ ] Repeat steps 2-3 until 95% accuracy or more.
+- [x] Process the data
+- [ ] Create and test a model
+- [ ] Run predictions
+- [ ] Repeat steps 2-3 until 95% accuracy or more.
