@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import os, sys, random, pickle
 
 
-remove_cols = ["gameId","blueTotalMinionsKilled","redTotalMinionsKilled"]
+remove_cols = ["gameId","blueTotalMinionsKilled","redTotalMinionsKilled","blueTotalMinionsKilled","redTotalMinionsKilled","blueTotalJungleMinionsKilled","redTotalJungleMinionsKilled","blueGoldDiff","redGoldDiff","blueExperienceDiff","redExperienceDiff","blueCSPerMin","redCSPerMin","blueGoldPerMin","redGoldPerMin"]
 data = pd.read_csv("dataset.csv")
 data = data.drop(remove_cols, axis=1)
 msk = np.random.rand(len(data)) < 0.8

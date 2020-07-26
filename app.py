@@ -26,15 +26,21 @@ def build_model():
     model = keras.Sequential([
         tf.keras.layers.Dense(64, activation = "relu", input_shape=[len(x_train.keys())]),
         tf.keras.layers.Dense(64, activation = "relu"),
-        tf.keras.layers.Dense(1)
+        tf.keras.layers.Dense(64, activation = "relu"),
+        tf.keras.layers.Dense(1, activation="sigmoid")
     ])
 
     optimizer = tf.keras.optimizers.RMSprop(0.001)
 
-    model.compile(loss = 'mse', optimizer=optimizer,metrics = "accuracy")
+    model.compile(loss = 'binary_crossentropy', optimizer="adam",metrics = "accuracy")
 
     return model
 
 model = build_model()
 
 model.summary()
+
+model.fit(x_train,y_train,epochs=50, verbose = 0)
+
+train_loss,train_acc = model.evaluate(x_train,y_train)
+print(train_loss,train_acc)
