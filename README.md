@@ -12,6 +12,6 @@ Following, use simply run app.py...
 
 ## ToDo
 - [x] Process the data
-- [ ] Create and test a model
-- [ ] Run predictions
+- [x] Create and test a model
+- [x] Run predictions
 - [ ] Repeat steps 2-3 until 95% accuracy or more.
