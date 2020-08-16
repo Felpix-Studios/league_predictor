@@ -13,7 +13,13 @@ msk = np.random.rand(len(data)) < 0.8
 x_train = data[msk]
 x_test = data[~msk]
 
-sns.pairplot(x_train[["blueWins","blueKills", "redKills", "blueTowersDestroyed", "redTowersDestroyed"]], diag_kind="kde")
+# sns.pairplot(x_train[["blueWins","blueKills", "redKills", "blueTowersDestroyed", "redTowersDestroyed"]], diag_kind="kde")
+
+#sns.pairplot(x_train[["blueWins","blueKills","blueAssists","blueTotalExperience","redTotalExperience","redAssists", "redKills"]], size=3, palette='Set1')
+print(x_train.corr(method = 'pearson'))
+
+plt.figure(figsize=(16, 12))
+sns.heatmap(x_train.corr(), cmap='YlGnBu', annot=True, fmt='.2f', vmin=0);
 
 train_stats = x_train.describe()
 train_stats.pop("blueWins")
