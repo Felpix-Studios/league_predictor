@@ -28,8 +28,9 @@ def build_model():
     model = keras.Sequential([
         tf.keras.layers.Dense(64, activation = "relu", input_shape=[len(x_train.keys())]),
         tf.keras.layers.Dense(64, activation = "relu"),
-        tf.keras.layers.Dense(64, activation = "relu"),
-        tf.keras.layers.Dense(1, activation="sigmoid")
+        tf.keras.layers.Dense(1)
+        #tf.keras.layers.Dense(64, activation = "relu"),
+        #tf.keras.layers.Dense(1, activation="sigmoid")
     ])
 
     optimizer = tf.keras.optimizers.RMSprop(0.001)
@@ -42,7 +43,7 @@ model = build_model()
 
 model.summary()
 
-model.fit(x_train,y_train,epochs=50, verbose = 0)
+model.fit(x_train,y_train,epochs=500, verbose = 0)
 
 train_loss,train_acc = model.evaluate(x_train,y_train)
 print(train_loss,train_acc)
@@ -55,6 +56,4 @@ prediction = model.predict(x_test)
 print(prediction)
 print(prediction[0])
 print(prediction[0][0])
-print(CATEGORIES[int(prediction[0][0])])
-print(CATEGORIES[int(prediction[1][0])])
 print(y_test.head())

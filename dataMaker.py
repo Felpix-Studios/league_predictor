@@ -5,8 +5,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import os, sys, random, pickle
 
-
-remove_cols = ["gameId","blueTotalMinionsKilled","redTotalMinionsKilled","blueTotalMinionsKilled","redTotalMinionsKilled","blueTotalJungleMinionsKilled","redTotalJungleMinionsKilled","blueGoldDiff","redGoldDiff","blueExperienceDiff","redExperienceDiff","blueCSPerMin","redCSPerMin","blueGoldPerMin","redGoldPerMin"]
+# blue first blood,blue kills, bluedeaths, blue assists,blue total gold, blue avg level, blue total xp
+remove_cols = ["gameId","blueWardsPlaced","blueWardsDestroyed","blueTowersDestroyed","blueTotalMinionsKilled","blueHeralds","blueTotalJungleMinionsKilled","blueGoldDiff","blueExperienceDiff","blueCSPerMin","blueGoldPerMin","redWardsPlaced","redWardsDestroyed","redFirstBlood","redKills","redDeaths","redAssists","redEliteMonsters","redDragons","redHeralds","redTowersDestroyed","redTotalGold","redAvgLevel","redTotalExperience","redTotalMinionsKilled","redTotalJungleMinionsKilled","redGoldDiff","redExperienceDiff","redCSPerMin","redGoldPerMin"]
 data = pd.read_csv("dataset.csv")
 data = data.drop(remove_cols, axis=1)
 msk = np.random.rand(len(data)) < 0.8
@@ -43,7 +43,7 @@ norm_x_train = norm(x_train)
 norm_x_test = norm(x_test)
 
 pickle_out = open("x_train.pickle","wb")
-pickle.dump(norm_x_train,pickle_out)
+pickle.dump(x_train,pickle_out)
 pickle_out.close()
 
 pickle_out = open("y_train.pickle","wb")
@@ -51,7 +51,7 @@ pickle.dump(y_train,pickle_out)
 pickle_out.close()
 
 pickle_out = open("x_test.pickle","wb")
-pickle.dump(norm_x_test,pickle_out)
+pickle.dump(x_test,pickle_out)
 pickle_out.close()
 
 pickle_out = open("y_test.pickle","wb")
